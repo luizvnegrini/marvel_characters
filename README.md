@@ -70,10 +70,6 @@ Project uses Atomic Design for create the Design System. Click [here](https://br
 
 About the project I tried to deliver something robust but there is always more to do, in this case I would like to perform more tests, different types of tests such as "golden tests" and "widget tests" that were not implemented, reevaluate the code and see if any refactoring would be necessary to leave the cleaner code.
 
-To solve the problem of negative reviews and crash reports I would work on the performance of the application and test with real devices in addition to using emulators for older device versions. It is possible to carry out tests with the use of third-party products that test on many real devices, it would also track all application usage with analytics and crashlytics.
-
-The application has already been architected for a scale of teams, it is already a monorepo and modularized. It also uses techniques for inject dependencies lazyLoading and yield return and also using separate threads (isolates) between UI and business layer. I didn't create any more modules because it's a simple app, one module is enough, but an example of another module would be any other feature such as authentication, and the others I suggested at the beginning of this file.
-
 It would certainly be possible to solve the problem proposed with a simpler app, but I want to make it clear that I did it in this way and with complexity to meet the request that the app must be scalable and also to show my knowledge, I hope I have fulfilled it.
 
 ### **5.1 Improvements**

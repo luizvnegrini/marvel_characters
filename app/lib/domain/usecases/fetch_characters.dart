@@ -1,18 +1,23 @@
 import 'package:external_dependencies/external_dependencies.dart';
 
 import '../../core/core.dart';
+import '../domain.dart';
 
 abstract class FetchCharacters {
-  Either<Failure, String> call();
+  Future<Either<Failure, Pagination<Character>>> call();
 }
 
-class GenerateNewColorImpl implements FetchCharacters {
+class FetchCharactersImpl implements FetchCharacters {
+  final CharactersRepository _repository;
+
+  FetchCharactersImpl(this._repository);
+
   @override
-  Either<Failure, String> call() {
-    try {
-      throw UnimplementedError();
-    } catch (e) {
-      return Left(Failure(type: ExceptionType.unexpected));
-    }
+  Future<Either<Failure, Pagination<Character>>> call() async {
+    // In this case I will leave it just as a tunnel to illustrate how it
+    // be unnecessary in certain situations, we could call the repository
+    // directly from within the viewmodel, skipping a layer, but as we have no
+    // business rules in this case, I don't see the need.
+    return await _repository.fetchCharacters();
   }
 }

@@ -10,6 +10,9 @@
             "args": [
                 "--flavor",
                 "dev",
+                "--dart-define=PUBLIC_KEY=1960c0d5ba5905c6fafb3046486c8d91",
+                "--dart-define=PRIVATE_KEY=3082aca185be3f254a9c18f4dc85a9935b7d1898",
+                "--dart-define=BASE_URL=https://gateway.marvel.com/v1/public/",
             ]
         },
         {
@@ -21,6 +24,9 @@
             "args": [
                 "--flavor",
                 "hml",
+                "--dart-define=PUBLIC_KEY=1960c0d5ba5905c6fafb3046486c8d91",
+                "--dart-define=PRIVATE_KEY=3082aca185be3f254a9c18f4dc85a9935b7d1898",
+                "--dart-define=BASE_URL=https://gateway.marvel.com/v1/public/",
             ]
         },
         {
@@ -32,6 +38,9 @@
             "args": [
                 "--flavor",
                 "prod",
+                "--dart-define=PUBLIC_KEY=1960c0d5ba5905c6fafb3046486c8d91",
+                "--dart-define=PRIVATE_KEY=3082aca185be3f254a9c18f4dc85a9935b7d1898",
+                "--dart-define=BASE_URL=https://gateway.marvel.com/v1/public/",
             ]
         },
     ]

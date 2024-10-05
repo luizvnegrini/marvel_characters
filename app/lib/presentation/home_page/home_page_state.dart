@@ -1,3 +1,4 @@
+import '../../domain/domain.dart';
 import '../base/viewmodel.dart';
 
 abstract class HomePageState extends ViewModelState {
@@ -5,14 +6,14 @@ abstract class HomePageState extends ViewModelState {
 
   abstract final String errorMessage;
 
-  abstract final String? hex;
+  abstract final List<Character> characters;
 
   const HomePageState();
 
   HomePageState copyWith({
     bool? isLoading,
     String? errorMessage,
-    String? hex,
+    List<Character>? characters,
   });
 }
 
@@ -24,19 +25,19 @@ class HomePageStateImpl extends HomePageState {
   final String errorMessage;
 
   @override
-  final String? hex;
+  final List<Character> characters;
 
   @override
   List<Object?> get props => [
         isLoading,
         errorMessage,
-        hex,
+        characters,
       ];
 
   const HomePageStateImpl({
     this.isLoading = false,
     this.errorMessage = '',
-    this.hex,
+    this.characters = const [],
   });
 
   factory HomePageStateImpl.initial() => const HomePageStateImpl();
@@ -45,11 +46,11 @@ class HomePageStateImpl extends HomePageState {
   HomePageState copyWith({
     bool? isLoading,
     String? errorMessage,
-    String? hex,
+    List<Character>? characters,
   }) =>
       HomePageStateImpl(
         isLoading: isLoading ?? this.isLoading,
         errorMessage: errorMessage ?? this.errorMessage,
-        hex: hex ?? this.hex,
+        characters: characters ?? this.characters,
       );
 }

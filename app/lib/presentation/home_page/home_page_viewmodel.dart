@@ -26,15 +26,28 @@ class HomePageViewModelImpl extends HomePageViewModel {
 
   HomePageViewModelImpl({
     required this.fetchCharacters,
-  }) : super(HomePageStateImpl.initial());
+  }) : super(HomePageStateImpl.initial()) {
+    fetch();
+  }
 
   @override
-  void fetch() {
-    final result = fetchCharacters();
+  Future<void> fetch() async {
+    state = state.copyWith(isLoading: true);
+
+    final result = await fetchCharacters();
 
     state = result.fold(
-      (failure) => state.copyWith(errorMessage: failure.message),
-      (hex) => state.copyWith(hex: hex),
+      (failure) => state.copyWith(errorMessage: 'Please try again later'),
+      (characters) => state.copyWith(
+        characters: List.from(
+          [
+            ...state.characters,
+            ...characters.results,
+          ],
+        ),
+      ),
     );
+
+    state = state.copyWith(isLoading: false);
   }
 }

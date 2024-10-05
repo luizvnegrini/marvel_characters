@@ -1,0 +1,22 @@
+flavors:
+  dev:
+    app:
+      name: "Marvel Characters dev"
+    android:
+      applicationId: "com.marvelcharacters.dev"
+    ios:
+      bundleId: "com.marvelcharacters.dev"
+  hml:
+    app:
+      name: "Marvel Characters hml"
+    android:
+      applicationId: "com.marvelcharacters.hml"
+    ios:
+      bundleId: "com.marvelcharacters.hml"
+  prod:
+    app:
+      name: "Marvel Characters prod"
+    android:
+      applicationId: "com.marvelcharacters.prod"
+    ios:
+      bundleId: "com.marvelcharacters.prod"

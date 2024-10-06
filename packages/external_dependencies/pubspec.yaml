@@ -12,6 +12,7 @@ dependencies:
   dio: ^5.7.0
   flutter:
     sdk: flutter
+  flutter_animate: ^4.5.0
   hooks_riverpod: ^2.5.1
   equatable: ^2.0.5
   flutter_hooks: ^0.20.5

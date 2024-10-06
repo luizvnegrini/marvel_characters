@@ -1,3 +1,4 @@
+import 'package:external_dependencies/external_dependencies.dart';
 import 'package:flutter/material.dart';
 
 class CharacterTile extends StatelessWidget {
@@ -50,12 +51,14 @@ class CharacterTile extends StatelessWidget {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
+                )
+                    .animate(delay: 500.milliseconds)
+                    .fade(duration: 800.milliseconds),
               ),
             ),
           ),
         ],
       ),
-    );
+    ).animate().fade(duration: 500.milliseconds);
   }
 }

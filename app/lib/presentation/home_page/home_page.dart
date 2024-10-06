@@ -2,12 +2,13 @@ import 'package:design_system/design_system.dart';
 import 'package:external_dependencies/external_dependencies.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/core.dart';
 import '../../utils/utils.dart';
 import 'home_page_providers.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
+
+  final _textStyle = const TextStyle(fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,19 +34,18 @@ class HomePage extends HookConsumerWidget {
 
         return loadingWidget ??
             ScaffoldWidget(
-              body: Center(
-                child: Column(
-                  children: [
-                    const Text(
-                      'Characters',
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          context.go(Routes.details, extra: 199);
-                        },
-                        child: const Text('navigate to details'))
-                  ],
-                ),
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const VGap.xxs(),
+                  Text('FEATURED CHARACTERS', style: _textStyle),
+                  Text('MARVEL CHARACTER LIST', style: _textStyle),
+                  // ElevatedButton(
+                  //     onPressed: () {
+                  //       context.go(Routes.details, extra: 199);
+                  //     },
+                  //     child: const Text('navigate to details'))
+                ],
               ),
             );
       },

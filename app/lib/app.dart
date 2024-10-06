@@ -79,7 +79,11 @@ class AppLoadedRoot extends HookConsumerWidget {
     return MaterialApp.router(
       scaffoldMessengerKey: useScaffoldMessenger(ref),
       title: appTitle,
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(
+        useMaterial3: true,
+        fontFamily: 'Roboto Condensed',
+        package: 'design_system',
+      ),
       routerConfig: router,
     );
   }

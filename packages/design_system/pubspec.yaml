@@ -21,3 +21,8 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+  fonts:
+    - family: Roboto Condensed
+      fonts:
+        - asset: assets/fonts/RobotoCondensed-Italic-VariableFont_wght.ttf
+        - asset: assets/fonts/RobotoCondensed-VariableFont_wght.ttf

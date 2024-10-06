@@ -2,6 +2,7 @@ import 'package:design_system/design_system.dart';
 import 'package:external_dependencies/external_dependencies.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/core.dart';
 import '../../utils/utils.dart';
 import 'home_page_providers.dart';
 
@@ -32,11 +33,20 @@ class HomePage extends HookConsumerWidget {
             : null;
 
         return loadingWidget ??
-            const ScaffoldWidget(
+            ScaffoldWidget(
               showAppBar: false,
               body: Center(
-                child: Text(
-                  'Characters',
+                child: Column(
+                  children: [
+                    const Text(
+                      'Characters',
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          context.go(Routes.details, extra: 199);
+                        },
+                        child: const Text('navigate to details'))
+                  ],
                 ),
               ),
             );

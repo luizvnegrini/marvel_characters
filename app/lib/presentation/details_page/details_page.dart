@@ -13,6 +13,10 @@ class DetailsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Widget? loadingWidget;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final vm = readDetailsViewModel(ref);
+      vm.fetchCharacter(characterId);
+    });
 
     return HookConsumer(
       builder: (context, ref, __) {

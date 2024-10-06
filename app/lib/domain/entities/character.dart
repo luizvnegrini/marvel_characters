@@ -1,8 +1,10 @@
+import '../domain.dart';
+
 class Character {
   final int id;
   final String name;
   final String description;
-  final String thumbnail;
+  final Thumbnail thumbnail;
 
   Character({
     required this.id,

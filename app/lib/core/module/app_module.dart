@@ -4,7 +4,7 @@ import '../../presentation/presentation.dart';
 
 class Routes {
   static String get _source => '/';
-  static String get details => 'details';
+  static String get details => '/details';
   static String get home => _source;
 }
 
@@ -18,7 +18,7 @@ class AppModule {
             GoRoute(
               name: 'result',
               path: Routes.details,
-              builder: (context, state) {
+              builder: (_, state) {
                 final characterId = state.extra as int;
                 return DetailsPage(characterId: characterId);
               },

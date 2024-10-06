@@ -27,14 +27,12 @@ class HomePage extends HookConsumerWidget {
 
         loadingWidget = state.isLoading
             ? const ScaffoldWidget(
-                showAppBar: false,
                 body: Center(child: CircularProgressIndicator()),
               )
             : null;
 
         return loadingWidget ??
             ScaffoldWidget(
-              showAppBar: false,
               body: Center(
                 child: Column(
                   children: [

@@ -4,29 +4,31 @@ import '../../design_system.dart';
 
 class ScaffoldWidget extends StatelessWidget {
   final Widget? body;
-  final Widget? bottomNavigationBar;
   final Color? backgroundColor;
+  final Widget? bottomNavigationBar;
   final bool showAppBar;
-  final Text? title;
 
   const ScaffoldWidget({
     this.body,
-    this.bottomNavigationBar,
     this.backgroundColor,
+    this.bottomNavigationBar,
     this.showAppBar = true,
-    this.title,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor ?? Colors.white,
         appBar: showAppBar
             ? AppBar(
                 centerTitle: true,
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.black,
                 automaticallyImplyLeading: false,
-                title: title,
+                title: Image.asset(
+                  'assets/images/logo.webp',
+                  package: 'design_system',
+                  width: 100,
+                ),
               )
             : null,
         body: SafeArea(

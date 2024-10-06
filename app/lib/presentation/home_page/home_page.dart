@@ -12,6 +12,20 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Widget? loadingWidget;
+    final scrollController = useScrollController();
+
+    useEffect(() {
+      scrollController.addListener(() {
+        final state = useHomeState(ref);
+
+        if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
+          final vm = readHomeViewModel(ref);
+          vm.fetch(offset: state.currentOffset);
+        }
+      });
+      return () => scrollController.dispose();
+    }, [scrollController]);
 
     return HookConsumer(
       builder: (context, ref, __) {
@@ -31,10 +45,21 @@ class HomePage extends HookConsumerWidget {
               )
             : null;
 
+        if (state.isLoadingNextPage) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            scrollController.animateTo(
+              scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 100),
+              curve: Curves.easeOut,
+            );
+          });
+        }
+
         return loadingWidget ??
             ScaffoldWidget(
               padding: const EdgeInsets.all(0),
               body: SingleChildScrollView(
+                controller: scrollController,
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
@@ -47,12 +72,14 @@ class HomePage extends HookConsumerWidget {
                       ),
                       child: CharactersList(characters: state.characters),
                     ),
-                    const VGap.nano(),
-                    // ElevatedButton(
-                    //     onPressed: () {
-                    //       context.go(Routes.details, extra: 199);
-                    //     },
-                    //     child: const Text('navigate to details'))
+                    if (state.isLoadingNextPage) ...[
+                      const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                        ),
+                      ),
+                      const VGap.sm(),
+                    ],
                   ],
                 ),
               ),

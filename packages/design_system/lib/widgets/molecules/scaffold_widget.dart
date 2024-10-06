@@ -5,14 +5,12 @@ import '../../design_system.dart';
 class ScaffoldWidget extends StatelessWidget {
   final Widget? body;
   final Color? backgroundColor;
-  final Widget? bottomNavigationBar;
   final bool showAppBar;
   final EdgeInsetsGeometry? padding;
 
   const ScaffoldWidget({
     this.body,
     this.backgroundColor,
-    this.bottomNavigationBar,
     this.showAppBar = true,
     this.padding,
     super.key,
@@ -34,11 +32,11 @@ class ScaffoldWidget extends StatelessWidget {
               )
             : null,
         body: SafeArea(
+          bottom: false,
           child: Padding(
             padding: padding ?? const EdgeInsets.all(kSpacingXXXS),
             child: body,
           ),
         ),
-        bottomNavigationBar: bottomNavigationBar,
       );
 }

@@ -4,7 +4,10 @@ import '../../core/core.dart';
 import '../domain.dart';
 
 abstract class CharactersRepository {
-  Future<Either<Failure, Pagination<Character>>> fetchCharacters();
+  Future<Either<Failure, Pagination<Character>>> fetchCharacters({
+    required int offset,
+    required int limit,
+  });
   Future<Either<Failure, Character>> fetchCharacterDetails({
     required int characterId,
   });

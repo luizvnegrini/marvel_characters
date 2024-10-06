@@ -17,12 +17,14 @@ abstract class HomePageViewModel extends ViewModel<HomePageState> {
 
   HomePageViewModel(super.state);
 
-  void fetch();
+  Future<void> fetch({int offset = 0});
 }
 
 class HomePageViewModelImpl extends HomePageViewModel {
   @override
   final FetchCharacters fetchCharacters;
+
+  final paginationLimit = 20;
 
   HomePageViewModelImpl({
     required this.fetchCharacters,
@@ -31,23 +33,38 @@ class HomePageViewModelImpl extends HomePageViewModel {
   }
 
   @override
-  Future<void> fetch() async {
-    state = state.copyWith(isLoading: true);
+  Future<void> fetch({int offset = 0}) async {
+    state = state.copyWith(
+      isLoading: offset == 0,
+      isLoadingNextPage: offset >= paginationLimit,
+    );
 
-    final result = await fetchCharacters();
+    final result = await fetchCharacters(
+      offset: offset,
+      limit: paginationLimit,
+    );
 
     state = result.fold(
       (failure) => state.copyWith(errorMessage: 'Please try again later'),
-      (characters) => state.copyWith(
-        characters: List.from(
-          [
-            ...state.characters,
-            ...characters.results,
-          ],
-        ),
-      ),
+      (pagination) {
+        final updatedOffset = pagination.offset + pagination.count;
+
+        return state.copyWith(
+          characters: List.from(
+            [
+              ...state.characters,
+              ...pagination.results,
+            ],
+          ),
+          currentOffset: updatedOffset,
+          hasReachedMax: updatedOffset >= pagination.total,
+        );
+      },
     );
 
-    state = state.copyWith(isLoading: false);
+    state = state.copyWith(
+      isLoading: false,
+      isLoadingNextPage: false,
+    );
   }
 }

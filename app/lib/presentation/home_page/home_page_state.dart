@@ -4,6 +4,12 @@ import '../base/viewmodel.dart';
 abstract class HomePageState extends ViewModelState {
   abstract final bool isLoading;
 
+  abstract final bool isLoadingNextPage;
+
+  abstract final int currentOffset;
+
+  abstract final bool hasReachedMax;
+
   abstract final String errorMessage;
 
   abstract final List<Character> characters;
@@ -14,6 +20,9 @@ abstract class HomePageState extends ViewModelState {
     bool? isLoading,
     String? errorMessage,
     List<Character>? characters,
+    bool? isLoadingNextPage,
+    int? currentOffset,
+    bool? hasReachedMax,
   });
 }
 
@@ -28,6 +37,15 @@ class HomePageStateImpl extends HomePageState {
   final List<Character> characters;
 
   @override
+  final bool isLoadingNextPage;
+
+  @override
+  final int currentOffset;
+
+  @override
+  final bool hasReachedMax;
+
+  @override
   List<Object?> get props => [
         isLoading,
         errorMessage,
@@ -38,6 +56,9 @@ class HomePageStateImpl extends HomePageState {
     this.isLoading = false,
     this.errorMessage = '',
     this.characters = const [],
+    this.isLoadingNextPage = false,
+    this.currentOffset = 0,
+    this.hasReachedMax = false,
   });
 
   factory HomePageStateImpl.initial() => const HomePageStateImpl();
@@ -47,10 +68,16 @@ class HomePageStateImpl extends HomePageState {
     bool? isLoading,
     String? errorMessage,
     List<Character>? characters,
+    bool? isLoadingNextPage,
+    int? currentOffset,
+    bool? hasReachedMax,
   }) =>
       HomePageStateImpl(
         isLoading: isLoading ?? this.isLoading,
         errorMessage: errorMessage ?? this.errorMessage,
         characters: characters ?? this.characters,
+        isLoadingNextPage: isLoadingNextPage ?? this.isLoadingNextPage,
+        currentOffset: currentOffset ?? this.currentOffset,
+        hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       );
 }

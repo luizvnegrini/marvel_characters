@@ -14,9 +14,21 @@ class CharactersRepositoryImpl implements CharactersRepository {
   CharactersRepositoryImpl(this._client);
 
   @override
-  Future<Either<Failure, Pagination<Character>>> fetchCharacters() async {
+  Future<Either<Failure, Pagination<Character>>> fetchCharacters({
+    required int offset,
+    required int limit,
+  }) async {
     try {
-      final data = await _client.get(route);
+      final data = await _client.get(
+        route,
+        options: HttpOptions(
+          queryParameters: {
+            'orderBy': 'name',
+            'offset': offset,
+            'limit': limit,
+          },
+        ),
+      );
 
       return data.fold(
         (failure) => left(Failure(type: ExceptionType.unexpected)),

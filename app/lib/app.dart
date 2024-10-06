@@ -41,6 +41,9 @@ class _App extends StatelessWidget {
               fetchCharacters.overrideWithValue(
                 state.appDependencies.fetchCharacters,
               ),
+              charactersRepository.overrideWithValue(
+                state.appDependencies.charactersRepository,
+              ),
             ],
             child: AppLoadedRoot(appTitle: appTitle),
           ),

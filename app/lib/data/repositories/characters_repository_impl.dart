@@ -20,6 +20,22 @@ class CharactersRepositoryImpl implements CharactersRepository {
 
       return data.fold(
         (failure) => left(Failure(type: ExceptionType.unexpected)),
+        (response) => right(PaginationMapper.fromJson(response.body['data'])),
+      );
+    } catch (e) {
+      return Left(Failure(type: ExceptionType.unexpected));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Character>> fetchCharacterDetails({
+    required int characterId,
+  }) async {
+    try {
+      final data = await _client.get('$route/characters/$id');
+
+      return data.fold(
+        (failure) => left(Failure(type: ExceptionType.unexpected)),
         (response) => right(CharacterMapper.fromJson(response.body['data'])),
       );
     } catch (e) {

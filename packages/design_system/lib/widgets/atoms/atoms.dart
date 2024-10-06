@@ -1,2 +1,4 @@
+export 'border.dart';
 export 'button.dart';
-export 'gap.dart';
+export 'hgap.dart';
+export 'vgap.dart';

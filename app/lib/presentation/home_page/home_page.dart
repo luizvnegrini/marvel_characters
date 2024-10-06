@@ -34,18 +34,41 @@ class HomePage extends HookConsumerWidget {
 
         return loadingWidget ??
             ScaffoldWidget(
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const VGap.xxs(),
-                  Text('FEATURED CHARACTERS', style: _textStyle),
-                  Text('MARVEL CHARACTER LIST', style: _textStyle),
-                  // ElevatedButton(
-                  //     onPressed: () {
-                  //       context.go(Routes.details, extra: 199);
-                  //     },
-                  //     child: const Text('navigate to details'))
-                ],
+              padding: const EdgeInsets.all(0),
+              body: Padding(
+                padding: const EdgeInsets.only(left: kSpacingXXXS),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const VGap.xxs(),
+                    Text('FEATURED CHARACTERS', style: _textStyle),
+                    const VGap.nano(),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (_, index) {
+                          final character = state.characters[index];
+
+                          return CharacterTile(
+                            imagePath:
+                                '${character.thumbnail.path}.${character.thumbnail.extension}',
+                            characterName: character.name,
+                          );
+                        },
+                        separatorBuilder: (_, index) => const HGap.nano(),
+                        itemCount: state.characters.length,
+                      ),
+                    ),
+                    const VGap.xxxs(),
+                    Text('MARVEL CHARACTER LIST', style: _textStyle),
+                    // ElevatedButton(
+                    //     onPressed: () {
+                    //       context.go(Routes.details, extra: 199);
+                    //     },
+                    //     child: const Text('navigate to details'))
+                  ],
+                ),
               ),
             );
       },

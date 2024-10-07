@@ -17,7 +17,8 @@ abstract class HomePageViewModel extends ViewModel<HomePageState> {
 
   HomePageViewModel(super.state);
 
-  Future<void> fetch({int offset = 0});
+  Future<void> fetch({int offset = 0, String? searchTerm});
+  void cleanSearch();
 }
 
 class HomePageViewModelImpl extends HomePageViewModel {
@@ -33,7 +34,17 @@ class HomePageViewModelImpl extends HomePageViewModel {
   }
 
   @override
-  Future<void> fetch({int offset = 0}) async {
+  void cleanSearch() {
+    state = state.copyWith(
+      characters: [],
+      currentOffset: 0,
+      hasReachedMax: false,
+      searchTerm: '',
+    );
+  }
+
+  @override
+  Future<void> fetch({int offset = 0, String? searchTerm}) async {
     state = state.copyWith(
       isLoading: offset == 0,
       isLoadingNextPage: offset >= paginationLimit,
@@ -42,22 +53,22 @@ class HomePageViewModelImpl extends HomePageViewModel {
     final result = await fetchCharacters(
       offset: offset,
       limit: paginationLimit,
+      nameStartsWith: searchTerm,
     );
 
     state = result.fold(
       (failure) => state.copyWith(errorMessage: 'Please try again later'),
       (pagination) {
         final updatedOffset = pagination.offset + pagination.count;
+        final updatedCharacters = offset == 0
+            ? pagination.results
+            : [...state.characters, ...pagination.results];
 
         return state.copyWith(
-          characters: List.from(
-            [
-              ...state.characters,
-              ...pagination.results,
-            ],
-          ),
+          characters: updatedCharacters,
           currentOffset: updatedOffset,
           hasReachedMax: updatedOffset >= pagination.total,
+          searchTerm: searchTerm,
         );
       },
     );

@@ -14,6 +14,8 @@ abstract class HomePageState extends ViewModelState {
 
   abstract final List<Character> characters;
 
+  abstract final String? searchTerm;
+
   const HomePageState();
 
   HomePageState copyWith({
@@ -23,6 +25,7 @@ abstract class HomePageState extends ViewModelState {
     bool? isLoadingNextPage,
     int? currentOffset,
     bool? hasReachedMax,
+    String? searchTerm,
   });
 }
 
@@ -46,10 +49,16 @@ class HomePageStateImpl extends HomePageState {
   final bool hasReachedMax;
 
   @override
+  final String searchTerm;
+  @override
   List<Object?> get props => [
         isLoading,
+        isLoadingNextPage,
         errorMessage,
         characters,
+        currentOffset,
+        hasReachedMax,
+        searchTerm,
       ];
 
   const HomePageStateImpl({
@@ -59,6 +68,7 @@ class HomePageStateImpl extends HomePageState {
     this.isLoadingNextPage = false,
     this.currentOffset = 0,
     this.hasReachedMax = false,
+    this.searchTerm = '',
   });
 
   factory HomePageStateImpl.initial() => const HomePageStateImpl();
@@ -71,6 +81,7 @@ class HomePageStateImpl extends HomePageState {
     bool? isLoadingNextPage,
     int? currentOffset,
     bool? hasReachedMax,
+    String? searchTerm,
   }) =>
       HomePageStateImpl(
         isLoading: isLoading ?? this.isLoading,
@@ -79,5 +90,6 @@ class HomePageStateImpl extends HomePageState {
         isLoadingNextPage: isLoadingNextPage ?? this.isLoadingNextPage,
         currentOffset: currentOffset ?? this.currentOffset,
         hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+        searchTerm: searchTerm ?? this.searchTerm,
       );
 }

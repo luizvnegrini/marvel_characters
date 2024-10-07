@@ -1,6 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:external_dependencies/external_dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:marvel_characters/presentation/home_page/home_page_viewmodel.dart';
 
 import '../../domain/domain.dart';
 import '../../utils/utils.dart';
@@ -12,7 +13,9 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Widget? loadingWidget;
+    final vm = readHomeViewModel(ref);
     final scrollController = useScrollController();
+    final searchController = useTextEditingController();
 
     useEffect(() {
       scrollController.addListener(() {
@@ -20,8 +23,7 @@ class HomePage extends HookConsumerWidget {
 
         if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent) {
-          final vm = readHomeViewModel(ref);
-          vm.fetch(offset: state.currentOffset);
+          vm.fetch(offset: state.currentOffset, searchTerm: state.searchTerm);
         }
       });
       return () => scrollController.dispose();
@@ -55,37 +57,63 @@ class HomePage extends HookConsumerWidget {
           });
         }
 
-        return loadingWidget ??
-            ScaffoldWidget(
-              padding: const EdgeInsets.all(0),
-              body: SingleChildScrollView(
-                controller: scrollController,
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    const VGap.xxs(),
-                    FeaturedCharacters(characters: state.characters),
-                    const VGap.xxs(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kSpacingXXXS,
-                      ),
-                      child: CharactersList(characters: state.characters),
-                    ),
-                    if (state.isLoadingNextPage) ...[
-                      const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.black,
+        return RefreshIndicator(
+          color: Colors.black,
+          onRefresh: () async => _clearAndFetch(vm),
+          child: loadingWidget ??
+              ScaffoldWidget(
+                padding: const EdgeInsets.all(0),
+                body: SingleChildScrollView(
+                  controller: scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      const VGap.xxs(),
+                      FeaturedCharacters(characters: state.characters),
+                      const VGap.xxs(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: kSpacingXXXS,
+                        ),
+                        child: CharactersList(
+                          characters: state.characters,
+                          searchController: searchController,
+                          onSearch: (value) {
+                            vm.cleanSearch();
+
+                            if (value.isEmpty) {
+                              vm.fetch(offset: 0);
+                            } else {
+                              vm.fetch(offset: 0, searchTerm: value);
+                            }
+                          },
+                          onChanged: (value) {
+                            if (value.isEmpty) {
+                              _clearAndFetch(vm);
+                            }
+                          },
                         ),
                       ),
-                      const VGap.sm(),
+                      if (state.isLoadingNextPage) ...[
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        ),
+                        const VGap.sm(),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            );
+        );
       },
     );
+  }
+
+  void _clearAndFetch(HomePageViewModel vm) {
+    vm.cleanSearch();
+    vm.fetch(offset: 0);
   }
 
   void _handleError(BuildContext context, WidgetRef ref, String message) {
@@ -152,11 +180,27 @@ class FeaturedCharacters extends StatelessWidget {
 
 class CharactersList extends HookConsumerWidget {
   final List<Character> characters;
+  final void Function(String) onSearch;
+  final void Function(String)? onChanged;
+  final TextEditingController searchController;
 
-  const CharactersList({super.key, required this.characters});
+  const CharactersList({
+    super.key,
+    required this.characters,
+    required this.onSearch,
+    required this.searchController,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final state = useHomeState(ref);
+
+    useEffect(() {
+      searchController.text = state.searchTerm ?? '';
+      return null;
+    }, [state.searchTerm]);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -165,9 +209,14 @@ class CharactersList extends HookConsumerWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const VGap.quarck(),
-        const SizedBox(
+        SizedBox(
           height: 36,
-          child: TextFormFieldWidget(hintText: 'Search characters'),
+          child: TextFormFieldWidget(
+            controller: searchController,
+            hintText: 'Search characters',
+            onFieldSubmitted: (value) => onSearch(value),
+            onChanged: (value) => onChanged?.call(value),
+          ),
         ),
         const VGap.xs(),
         GridView.count(

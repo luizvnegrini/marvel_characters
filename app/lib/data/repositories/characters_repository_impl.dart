@@ -17,6 +17,7 @@ class CharactersRepositoryImpl implements CharactersRepository {
   Future<Either<Failure, Pagination<Character>>> fetchCharacters({
     required int offset,
     required int limit,
+    String? nameStartsWith,
   }) async {
     try {
       final data = await _client.get(
@@ -26,6 +27,8 @@ class CharactersRepositoryImpl implements CharactersRepository {
             'orderBy': 'name',
             'offset': offset,
             'limit': limit,
+            if (nameStartsWith != null && nameStartsWith.isNotEmpty)
+              'nameStartsWith': nameStartsWith,
           },
         ),
       );

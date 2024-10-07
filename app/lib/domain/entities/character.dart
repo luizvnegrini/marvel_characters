@@ -12,4 +12,6 @@ class Character {
     required this.description,
     required this.thumbnail,
   });
+
+  String get thumbnailUrl => '${thumbnail.path}.${thumbnail.extension}';
 }

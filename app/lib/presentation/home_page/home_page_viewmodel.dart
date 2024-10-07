@@ -48,6 +48,7 @@ class HomePageViewModelImpl extends HomePageViewModel {
     state = state.copyWith(
       isLoading: offset == 0,
       isLoadingNextPage: offset >= paginationLimit,
+      errorMessage: '',
     );
 
     final result = await fetchCharacters(

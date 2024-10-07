@@ -83,6 +83,11 @@ class AppLoadedRoot extends HookConsumerWidget {
         useMaterial3: true,
         fontFamily: 'Roboto Condensed',
         package: 'design_system',
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+        ),
       ),
       routerConfig: router,
     );

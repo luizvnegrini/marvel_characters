@@ -47,11 +47,13 @@ class CharactersRepositoryImpl implements CharactersRepository {
     required int characterId,
   }) async {
     try {
-      final data = await _client.get('$route/characters/$id');
+      final data = await _client.get('$route/$characterId');
 
       return data.fold(
         (failure) => left(Failure(type: ExceptionType.unexpected)),
-        (response) => right(CharacterMapper.fromJson(response.body['data'])),
+        (response) => right(
+          CharacterMapper.fromJson(response.body['data']['results'][0]),
+        ),
       );
     } catch (e) {
       return Left(Failure(type: ExceptionType.unexpected));

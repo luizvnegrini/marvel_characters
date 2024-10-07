@@ -13,6 +13,16 @@ class DetailsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Widget? loadingWidget;
+    const textColor = Colors.white;
+    const textStyle = TextStyle(
+      color: textColor,
+      fontWeight: FontWeight.bold,
+    );
+    const descriptionStyle = TextStyle(
+      color: textColor,
+      fontWeight: FontWeight.normal,
+      fontSize: 14,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final vm = readDetailsViewModel(ref);
       vm.fetchCharacter(characterId);
@@ -32,17 +42,72 @@ class DetailsPage extends HookConsumerWidget {
 
         loadingWidget = state.isLoading
             ? const ScaffoldWidget(
-                showAppBar: false,
-                body: Center(child: CircularProgressIndicator()),
+                backgroundColor: Colors.black,
+                body: Loader(color: Colors.white),
               )
             : null;
 
         return loadingWidget ??
-            const ScaffoldWidget(
-              showAppBar: false,
-              body: Center(
-                child: Text(
-                  'Character details',
+            ScaffoldWidget(
+              padding: EdgeInsets.zero,
+              backgroundColor: Colors.black,
+              body: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CharacterTile(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          shadowHeight:
+                              MediaQuery.of(context).size.height * 0.08,
+                          imagePath: state.character?.thumbnailUrl ?? '',
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.black.withOpacity(1),
+                              Colors.black.withOpacity(.8),
+                              Colors.black.withOpacity(.6),
+                              Colors.black.withOpacity(.4),
+                              Colors.black.withOpacity(.2),
+                              Colors.transparent,
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          )).animate().fadeIn(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: kSpacingXXXS,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const VGap.xxxs(),
+                            Text(
+                              state.character?.name ?? '',
+                              style: textStyle.copyWith(fontSize: 24),
+                            ).animate().fadeIn(),
+                            if (state.character?.description.isNotEmpty ??
+                                false) ...[
+                              const VGap.xxs(),
+                              const Text('BIOGRAPHY', style: textStyle)
+                                  .animate()
+                                  .fadeIn(),
+                              const VGap.nano(),
+                              Text(
+                                state.character?.description ?? '',
+                                style: descriptionStyle,
+                              ).animate().fadeIn(delay: 200.milliseconds),
+                            ] else
+                              const Text(
+                                'No biography available',
+                                style: descriptionStyle,
+                              ).animate().fadeIn(delay: 500.milliseconds),
+                            const VGap.sm(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

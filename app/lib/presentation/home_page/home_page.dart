@@ -3,6 +3,7 @@ import 'package:external_dependencies/external_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:marvel_characters/presentation/home_page/home_page_viewmodel.dart';
 
+import '../../core/core.dart';
 import '../../domain/domain.dart';
 import '../../utils/utils.dart';
 import 'home_page_providers.dart';
@@ -66,7 +67,13 @@ class HomePage extends HookConsumerWidget {
                   child: Column(
                     children: [
                       const VGap.xxs(),
-                      FeaturedCharacters(characters: state.characters),
+                      FeaturedCharacters(
+                        characters: state.characters,
+                        onCharacterTap: (characterId) => _onCharacterTap(
+                          context: context,
+                          characterId: characterId,
+                        ),
+                      ),
                       const VGap.xxs(),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -75,6 +82,10 @@ class HomePage extends HookConsumerWidget {
                         child: CharactersList(
                           characters: state.characters,
                           searchController: searchController,
+                          onCharacterTap: (characterId) => _onCharacterTap(
+                            context: context,
+                            characterId: characterId,
+                          ),
                           onSearch: (value) => _onSearch(vm, value),
                           onChanged: (value) => _onChanged(value, vm),
                         ),
@@ -90,6 +101,13 @@ class HomePage extends HookConsumerWidget {
         );
       },
     );
+  }
+
+  void _onCharacterTap({
+    required BuildContext context,
+    required int characterId,
+  }) {
+    context.go(Routes.details, extra: characterId);
   }
 
   void _onChanged(String value, HomePageViewModel vm) {
@@ -133,8 +151,13 @@ class HomePage extends HookConsumerWidget {
 
 class FeaturedCharacters extends StatelessWidget {
   final List<Character> characters;
+  final Function(int) onCharacterTap;
 
-  const FeaturedCharacters({super.key, required this.characters});
+  const FeaturedCharacters({
+    super.key,
+    required this.characters,
+    required this.onCharacterTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -160,9 +183,12 @@ class FeaturedCharacters extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(left: leftPadding),
                 child: CharacterTile(
-                  imagePath:
-                      '${character.thumbnail.path}.${character.thumbnail.extension}',
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  shadowHeight: MediaQuery.of(context).size.height * 0.05,
+                  borderRadius: BorderRadius.circular(BorderSize.nano),
+                  imagePath: character.thumbnailUrl,
                   characterName: character.name,
+                  onTap: () => onCharacterTap(character.id),
                 ),
               );
             },
@@ -179,6 +205,7 @@ class CharactersList extends HookConsumerWidget {
   final List<Character> characters;
   final void Function(String) onSearch;
   final void Function(String)? onChanged;
+  final Function(int) onCharacterTap;
   final TextEditingController searchController;
 
   const CharactersList({
@@ -187,6 +214,7 @@ class CharactersList extends HookConsumerWidget {
     required this.onSearch,
     required this.searchController,
     this.onChanged,
+    required this.onCharacterTap,
   });
 
   @override
@@ -225,9 +253,11 @@ class CharactersList extends HookConsumerWidget {
           children: characters
               .map<CharacterTile>(
                 (character) => CharacterTile(
-                  imagePath:
-                      '${character.thumbnail.path}.${character.thumbnail.extension}',
+                  shadowHeight: MediaQuery.of(context).size.height * 0.05,
+                  borderRadius: BorderRadius.circular(BorderSize.nano),
+                  imagePath: character.thumbnailUrl,
                   characterName: character.name,
+                  onTap: () => onCharacterTap(character.id),
                 ),
               )
               .toList(),

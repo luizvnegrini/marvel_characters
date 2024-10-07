@@ -30,7 +30,7 @@ class DetailsPageViewModelImpl extends DetailsPageViewModel {
 
   @override
   Future<void> fetchCharacter(int characterId) async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true, errorMessage: '');
 
     // this is the case where that we didn't have a business rule and need to
     // fetch making api call but to reduce boilerplate I prefer to call directly

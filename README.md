@@ -2,6 +2,9 @@
 
 This project is a Flutter application developed to showcase Marvel characters. It demonstrates the ability to fetch and display information about various Marvel superheroes and villains. The app allows users to browse through a list of characters, view their details, and search for specific heroes. This project showcases the developer's skills in API integration (mocked), state management, and creating engaging user interfaces in Flutter.
 
+# Demo
+https://github.com/user-attachments/assets/8804d78a-67be-4faa-9c79-9e1b072890da
+
 ## Main Technologies
 - Flutter
 - Riverpod

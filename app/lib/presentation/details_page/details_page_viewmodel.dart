@@ -17,7 +17,7 @@ abstract class DetailsPageViewModel extends ViewModel<DetailsPageState> {
 
   DetailsPageViewModel(super.state);
 
-  void fetchCharacter(int characterId);
+  Future<void> fetchCharacter(int characterId);
 }
 
 class DetailsPageViewModelImpl extends DetailsPageViewModel {

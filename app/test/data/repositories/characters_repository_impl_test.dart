@@ -37,7 +37,7 @@ void main() {
                   'name': 'Spider-Man',
                   'description': 'Friendly neighborhood Spider-Man',
                   'thumbnail': {
-                    'path': 'http://example.com/spiderman',
+                    'path': 'http://faketest.com/spiderman',
                     'extension': 'jpg'
                   }
                 }
@@ -91,7 +91,7 @@ void main() {
                     'name': 'Spider-Man',
                     'description': 'Friendly neighborhood Spider-Man',
                     'thumbnail': {
-                      'path': 'http://example.com/spiderman',
+                      'path': 'http://faketest.com/spiderman',
                       'extension': 'jpg'
                     }
                   }

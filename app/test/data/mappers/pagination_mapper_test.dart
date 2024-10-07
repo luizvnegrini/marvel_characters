@@ -17,7 +17,7 @@ void main() {
             'name': 'Spider-Man',
             'description': 'Friendly neighborhood Spider-Man',
             'thumbnail': {
-              'path': 'http://example.com/spiderman',
+              'path': 'http://faketest.com/spiderman',
               'extension': 'jpg'
             }
           },
@@ -26,7 +26,7 @@ void main() {
             'name': 'Iron Man',
             'description': 'Genius billionaire',
             'thumbnail': {
-              'path': 'http://example.com/ironman',
+              'path': 'http://faketest.com/ironman',
               'extension': 'png'
             }
           }
@@ -87,7 +87,7 @@ void main() {
             'name': 'Spider-Man',
             'description': 'Friendly neighborhood Spider-Man',
             'thumbnail': {
-              'path': 'http://example.com/spiderman',
+              'path': 'http://faketest.com/spiderman',
               'extension': 'jpg'
             }
           }

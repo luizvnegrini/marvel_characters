@@ -18,7 +18,7 @@ class SplashScreenPage extends HookConsumerWidget {
               'assets/images/logo.webp',
               package: 'design_system',
               width: 100,
-            ),
+            ).animate(delay: 500.milliseconds).fadeIn(),
           ],
         ),
       ),

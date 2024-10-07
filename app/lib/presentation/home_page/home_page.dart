@@ -41,11 +41,8 @@ class HomePage extends HookConsumerWidget {
           );
         }
 
-        loadingWidget = state.isLoading
-            ? const ScaffoldWidget(
-                body: Center(child: CircularProgressIndicator()),
-              )
-            : null;
+        loadingWidget =
+            state.isLoading ? const ScaffoldWidget(body: Loader()) : null;
 
         if (state.isLoadingNextPage) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -78,28 +75,12 @@ class HomePage extends HookConsumerWidget {
                         child: CharactersList(
                           characters: state.characters,
                           searchController: searchController,
-                          onSearch: (value) {
-                            vm.cleanSearch();
-
-                            if (value.isEmpty) {
-                              vm.fetch(offset: 0);
-                            } else {
-                              vm.fetch(offset: 0, searchTerm: value);
-                            }
-                          },
-                          onChanged: (value) {
-                            if (value.isEmpty) {
-                              _clearAndFetch(vm);
-                            }
-                          },
+                          onSearch: (value) => _onSearch(vm, value),
+                          onChanged: (value) => _onChanged(value, vm),
                         ),
                       ),
                       if (state.isLoadingNextPage) ...[
-                        const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.black,
-                          ),
-                        ),
+                        const Loader(),
                         const VGap.sm(),
                       ],
                     ],
@@ -109,6 +90,22 @@ class HomePage extends HookConsumerWidget {
         );
       },
     );
+  }
+
+  void _onChanged(String value, HomePageViewModel vm) {
+    if (value.isEmpty) {
+      _clearAndFetch(vm);
+    }
+  }
+
+  void _onSearch(HomePageViewModel vm, String value) {
+    vm.cleanSearch();
+
+    if (value.isEmpty) {
+      vm.fetch(offset: 0);
+    } else {
+      vm.fetch(offset: 0, searchTerm: value);
+    }
   }
 
   void _clearAndFetch(HomePageViewModel vm) {

@@ -22,7 +22,7 @@ class ScaffoldWidget extends StatelessWidget {
         appBar: showAppBar
             ? AppBar(
                 centerTitle: true,
-                backgroundColor: Colors.black,
+                backgroundColor: context.colors.secondary,
                 title: Image.asset(
                   'assets/images/logo.webp',
                   package: 'design_system',

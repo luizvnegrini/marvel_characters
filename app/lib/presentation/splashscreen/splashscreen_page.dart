@@ -9,7 +9,7 @@ class SplashScreenPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ScaffoldWidget(
       showAppBar: false,
-      backgroundColor: Colors.black,
+      backgroundColor: context.colors.secondary,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -41,16 +41,16 @@ class DetailsPage extends HookConsumerWidget {
         }
 
         loadingWidget = state.isLoading
-            ? const ScaffoldWidget(
-                backgroundColor: Colors.black,
-                body: Loader(color: Colors.white),
+            ? ScaffoldWidget(
+                backgroundColor: context.colors.secondary,
+                body: const Loader(color: Colors.white),
               )
             : null;
 
         return loadingWidget ??
             ScaffoldWidget(
               padding: EdgeInsets.zero,
-              backgroundColor: Colors.black,
+              backgroundColor: context.colors.secondary,
               body: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: SafeArea(
@@ -64,11 +64,11 @@ class DetailsPage extends HookConsumerWidget {
                           imagePath: state.character?.thumbnailUrl ?? '',
                           gradient: LinearGradient(
                             colors: [
-                              Colors.black.withOpacity(1),
-                              Colors.black.withOpacity(.8),
-                              Colors.black.withOpacity(.6),
-                              Colors.black.withOpacity(.4),
-                              Colors.black.withOpacity(.2),
+                              context.colors.secondary.withOpacity(1),
+                              context.colors.secondary.withOpacity(.8),
+                              context.colors.secondary.withOpacity(.6),
+                              context.colors.secondary.withOpacity(.4),
+                              context.colors.secondary.withOpacity(.2),
                               Colors.transparent,
                             ],
                             begin: Alignment.bottomCenter,

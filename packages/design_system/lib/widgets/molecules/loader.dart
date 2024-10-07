@@ -1,3 +1,4 @@
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class Loader extends StatelessWidget {
@@ -9,7 +10,7 @@ class Loader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        color: color ?? Colors.black,
+        color: color ?? context.colors.secondary,
       ),
     );
   }

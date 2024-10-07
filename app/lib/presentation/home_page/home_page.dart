@@ -56,7 +56,7 @@ class HomePage extends HookConsumerWidget {
         }
 
         return RefreshIndicator(
-          color: Colors.black,
+          color: context.colors.secondary,
           onRefresh: () async => _clearAndFetch(vm),
           child: loadingWidget ??
               ScaffoldWidget(

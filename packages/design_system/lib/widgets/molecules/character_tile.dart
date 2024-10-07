@@ -1,3 +1,4 @@
+import 'package:design_system/design_system.dart';
 import 'package:external_dependencies/external_dependencies.dart';
 import 'package:flutter/material.dart';
 
@@ -50,8 +51,8 @@ class CharacterTile extends StatelessWidget {
                   gradient: gradient ??
                       LinearGradient(
                         colors: [
-                          Colors.black.withOpacity(.7),
-                          Colors.black.withOpacity(.7),
+                          context.colors.secondary.withOpacity(.7),
+                          context.colors.secondary.withOpacity(.7),
                           Colors.transparent,
                         ],
                         begin: Alignment.bottomCenter,

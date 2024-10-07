@@ -18,6 +18,7 @@ https://github.com/user-attachments/assets/8804d78a-67be-4faa-9c79-9e1b072890da
 - Search functionality to find specific characters
 
 ## Possible Future Features
+- Featured Characters: It's worth nothing that the implementation of the "Featured Characters" section was not clear in the project requirements or API documentation. There were no specific endpoints found to populate this section. In a real-world scenario, this would require clarification with the product team or API developers to determine the best approach for selecting and displaying featured characters.
 - Favorite characters list
 - Character grouping by teams or affiliations
 - Offline mode with local data storage
